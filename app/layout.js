@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Schibsted_Grotesk } from "next/font/google";
 import { Martian_Mono } from "next/font/google";
-import DotGrid from "@/components/DotGrid";
+import LightRays from "@/components/LightRays";
 import "./globals.css";
 
 const schibstedGrotesk = Schibsted_Grotesk({
@@ -27,18 +27,23 @@ export default function RootLayout({ children }) {
       >
 
 
-<div className="inset-0 absolute z-[-1] min-h-screen">
-  <DotGrid
-    dotSize={5}
-    gap={15}
-    baseColor="#271E37"
-    activeColor="#A5E1Eb"
-    proximity={120}
-    shockRadius={250}
-    shockStrength={5}
-    resistance={750}
-    returnDuration={1.5}
-  />
+
+<div className="absolute z-[-1] inset-0 min-h-screen">
+  <LightRays
+    raysOrigin="top-center"
+    raysColor="#ffffff"
+    raysSpeed={1}
+    lightSpread={0.5}
+    rayLength={3}
+    followMouse={true}
+    mouseInfluence={0.1}
+    noiseAmount={0}
+    distortion={0}
+    className="custom-rays"
+    pulsating={false}
+    fadeDistance={1}
+    saturation={1}
+/>
 </div>
 <main>
           {children}
