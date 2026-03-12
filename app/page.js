@@ -3,12 +3,14 @@ import Image from "next/image";
 import ExploreBtn from "./components/ExploreBtn";
 import EventCard from "./components/EventCard";
 import Navbar from "./components/NavBar";
+import HomepageTracker from "./components/HomepageTracker";
 import events from "../lib/events";
 
 export default function Home() {
  
   return (
   <section>
+<HomepageTracker/>
 <Navbar/>
       <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
