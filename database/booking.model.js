@@ -24,23 +24,16 @@ const bookingSchema = new mongoose.Schema(
 );
 
 // Pre-save hook: Validate that the referenced event exists
-bookingSchema.pre('save', async function (next) {
+// using async/await and throwing errors rather than callback style
+bookingSchema.pre('save', async function () {
   const booking = this;
 
   if (booking.isModified('eventId')) {
-    try {
-      const event = await Event.findById(booking.eventId);
-      if (!event) {
-        return next(
-          new Error(`Event with ID ${booking.eventId} does not exist`)
-        );
-      }
-    } catch (error) {
-      return next(new Error('Invalid Event ID format'));
+    const event = await Event.findById(booking.eventId);
+    if (!event) {
+      throw new Error(`Event with ID ${booking.eventId} does not exist`);
     }
   }
-
-  next();
 });
 
 const Booking = mongoose.models.Booking || mongoose.model('Booking', bookingSchema);

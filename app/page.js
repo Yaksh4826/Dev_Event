@@ -4,10 +4,15 @@ import ExploreBtn from "./components/ExploreBtn";
 import EventCard from "./components/EventCard";
 import Navbar from "./components/NavBar";
 import HomepageTracker from "./components/HomepageTracker";
-import events from "../lib/events";
 
-export default function Home() {
- 
+
+export default async function Page () {
+  const base_url = process.env.NEXT_PUBLIC_BASE_URL
+  const response= await fetch(`${base_url}/api/events`)
+  const {events} = await response.json();
+
+
+
   return (
   <section>
 <HomepageTracker/>
@@ -40,3 +45,4 @@ export default function Home() {
   </section>
   );
 }
+

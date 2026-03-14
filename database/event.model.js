@@ -86,7 +86,8 @@ const eventSchema = new mongoose.Schema(
 );
 
 // Pre-save hook: Generate slug from title and normalize date/time
-eventSchema.pre('save', async function (next) {
+// implemented as async function and uses thrown errors instead of a callback
+eventSchema.pre('save', async function () {
   const doc = this;
 
   // Generate slug only if title is modified
@@ -108,7 +109,7 @@ eventSchema.pre('save', async function (next) {
       }
       doc.date = dateObj.toISOString().split('T')[0];
     } catch (error) {
-      return next(new Error('Date must be a valid ISO date (YYYY-MM-DD)'));
+      throw new Error('Date must be a valid ISO date (YYYY-MM-DD)');
     }
   }
 
@@ -116,11 +117,11 @@ eventSchema.pre('save', async function (next) {
   if (doc.isModified('time')) {
     const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
     if (!timeRegex.test(doc.time)) {
-      return next(new Error('Time must be in HH:MM format (24-hour)'));
+      throw new Error('Time must be in HH:MM format (24-hour)');
     }
   }
 
-  next();
+
 });
 
 const Event = mongoose.models.Event || mongoose.model('Event', eventSchema);
